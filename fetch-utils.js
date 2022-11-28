@@ -28,3 +28,26 @@ export async function signOutUser() {
 }
 
 /* Data functions */
+
+export async function createListItem(item, rating) {
+    const response = await client.from('favorites').insert({ item, rating });
+
+    if (response.error) {
+        console.error(response.error.message);
+    } else {
+        return response.data;
+    }
+}
+
+export async function getListItems() {
+    const response = await client
+        .from('favorites')
+        .select('*')
+        .match({ user_id: client.auth.user().id });
+    console.log('response', response);
+    if (response.error) {
+        console.error(response.error.message);
+    } else {
+        return response.data;
+    }
+}

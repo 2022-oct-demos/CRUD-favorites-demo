@@ -1,7 +1,7 @@
 /* Imports */
 // this will check if we have a user and set signout link if it exists
 import './auth/user.js';
-import { createListItem, getListItems } from './fetch-utils.js';
+import { createListItem, editListItem, getListItems } from './fetch-utils.js';
 import { renderListItem } from './render-utils.js';
 
 /* Get DOM Elements */
@@ -13,6 +13,10 @@ const error = document.querySelector('#error');
 /* State */
 
 /* Events */
+window.addEventListener('load', async () => {
+    await fetchAndDisplayList();
+});
+
 form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
@@ -37,6 +41,14 @@ async function fetchAndDisplayList() {
     if (list) {
         for (let item of list) {
             const listItemEl = renderListItem(item);
+            listItemEl.addEventListener('click', async () => {
+                await editListItem(item);
+                fetchAndDisplayList();
+            });
+            if (item.cross_out) {
+                listItemEl.classList.add('cross-out-true');
+            }
+
             listEl.append(listItemEl);
         }
     }

@@ -8,4 +8,7 @@ export function renderListItem(itemObject) {
 // trains: 10/10
 
 // {item: 'trains',
-// rating: 10}
+// rating: 10,
+// cross_out: false,
+// id:
+// user_id: }

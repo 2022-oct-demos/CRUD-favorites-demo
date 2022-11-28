@@ -69,3 +69,7 @@ main {
 .hidden {
     display: none;
 }
+
+.cross-out-true {
+    text-decoration: line-through;
+}

@@ -64,3 +64,13 @@ export async function editListItem(item) {
         return response.data;
     }
 }
+
+export async function deleteList() {
+    const response = await client.from('favorites').delete().match({ user_id: getUser().id });
+
+    if (response.error) {
+        console.error(response.error.message);
+    } else {
+        return response.data;
+    }
+}

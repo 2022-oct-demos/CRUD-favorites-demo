@@ -1,12 +1,12 @@
 /* Imports */
 // this will check if we have a user and set signout link if it exists
 import './auth/user.js';
-import { createListItem, editListItem, getListItems } from './fetch-utils.js';
+import { createListItem, deleteList, editListItem, getListItems } from './fetch-utils.js';
 import { renderListItem } from './render-utils.js';
 
 /* Get DOM Elements */
 const form = document.querySelector('.create-form');
-// const deleteButton = document.querySelector('#delete-button');
+const deleteButton = document.querySelector('#delete-button');
 const listEl = document.querySelector('.list');
 const error = document.querySelector('#error');
 
@@ -33,6 +33,11 @@ form.addEventListener('submit', async (e) => {
     }
 });
 
+deleteButton.addEventListener('click', async () => {
+    await deleteList();
+    await fetchAndDisplayList();
+});
+
 /* Display Functions */
 async function fetchAndDisplayList() {
     listEl.textContent = '';
@@ -43,7 +48,7 @@ async function fetchAndDisplayList() {
             const listItemEl = renderListItem(item);
             listItemEl.addEventListener('click', async () => {
                 await editListItem(item);
-                fetchAndDisplayList();
+                await fetchAndDisplayList();
             });
             if (item.cross_out) {
                 listItemEl.classList.add('cross-out-true');
